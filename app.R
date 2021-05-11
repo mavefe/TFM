@@ -1,32 +1,15 @@
-library(shiny)
+# importamos datos
+cv_vacuna = read.csv("https://github.com/owid/covid-19-data/blob/master/public/data/vaccinations/vaccinations.csv")
+cv_tipos = read.csv("https://github.com/owid/covid-19-data/blob/master/public/data/vaccinations/vaccinations-by-manufacturer.csv")
 
-options(shiny.reactlog = TRUE)
+head(cv_tipos)
 
-ui <- fluidPage(
-  sidebarLayout(
-    sidebarPanel(
-      textOutput("panel")
-    ),
-    mainPanel(
-      tabsetPanel(
-        id = "tabset",
-        tabPanel("panel 1", "one"),
-        tabPanel("panel 2", "two"),
-        tabPanel("panel 3", "three")
-      )
-    )
-  )
-)
-server <- function(input, output, session) {
-  output$panel <- renderText({
-    paste("Current panel: ", input$tabset)
-  })
-}
-shinyApp(ui, server) # ctrl+shift+enter atajo para abrir
-# para cerrar la app pulsar esc
-
-# para que se muestre en el viewer (pero primero, en el shiny-run.R,
-# hay que darle a Jobs/Start local job y poner esa URL):
-# rstudioapi::viewer("http://127.0.0.1:3582")
-# Haciendo esto, cada vez que guarde (con Ctrl+S por ejemplo)
-# se actualiza el viewer.
+# rellenamos datos faltantes
+for(i in 1:ncol(cv_vacuna))
+  for (j in 1:nrow(cv_vacuna))
+    if (is.null(cv_vacuna[i,j]) & (j=0)) {
+      cv_vacuna[i,j]=0
+    }
+    if (is.null(cv_vacuna[i,j]) & j!=0) {
+      cv_vacuna[i,j]=cv_vacuna[i,j-1]
+    }
