@@ -1,15 +1,15 @@
 # dashboardPage
 
+library(shiny)
 library(shinydashboard)
 
 ui <- dashboardPage(
-  dashboardHeader(),
-  dashboardSidebar(),
-  dashboardBody()
+  dashboardHeader(title = "Encabezado"),
+  dashboardSidebar("Barra lateral"),
+  dashboardBody("Cuerpo")
 )
 
-server <- function(input, output) {
-}
+server <- function(input, output) {}
 
 shinyApp(server = server, ui = ui)
 
