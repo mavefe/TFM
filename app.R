@@ -62,13 +62,9 @@ ui <- dashboardPage(
                   br(),
                   "y utilizando lenguaje R.",
                   p(),
-                  "Os animo a que veáis el",
-                  a("código de mi aplicación en GitHub", href="https://github.com/mavefe/TFM"),
-                  tags$img(src='svg/github.svg', height='20', width='20'),
+                  "Para cualquier pregunta o sugerencia podéis contactar conmigo por LinkedIn",
                   br(),
-                  "y probéis a modificarla vosotros mismos.",
-                  p(),
-                  "Podéis contactar conmigo por LinkedIn o por correo electrónico:",
+                  "o por correo electrónico:",
                   p(),
                   style="text-align: center; font-size: 16px;"), # Texto centrado y con tamaño 16
               fluidRow(
@@ -81,7 +77,16 @@ ui <- dashboardPage(
                 infoBox("E-mail UEMC", "mvela23668@alumnos.uemc.es", # Caja de email UEMC
                         icon = icon("envelope", lib = "font-awesome"), 
                         fill = TRUE, color = "green")
-              )
+              ),
+              div(
+                  p(),
+                  "Os animo a que veáis el",
+                  a("código de mi aplicación en GitHub", href="https://github.com/mavefe/TFM"),
+                  tags$img(src='svg/github.svg', height='20', width='20'),
+                  br(),
+                  "y probéis a modificarla vosotros mismos.",
+                  style="text-align: center; font-size: 16px;"
+                  )
       ),
       tabItem("fuentes"), # En la opción de menú "Fuentes" y
       tabItem("graficos") # "Gráficos" de momento no debe aparecer nada
