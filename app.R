@@ -5,7 +5,7 @@ ui <- dashboardPage(
   skin = "black", # Color del tema
   dashboardHeader(
     title = tags$strong( # Título en negrita
-      tags$img(src="virus.jpg", height = 40, weight = 40), # Imagen del virus en el encabezado
+      tags$img(src='svg/virus.svg', height='35', width='35'), # Icono del virus en el encabezado
       "Vacunación COVID-19" # Título
       ),
     titleWidth = 300 # Ancho del encabezado
