@@ -34,16 +34,54 @@ ui <- dashboardPage(
               ),
     tabItems(
       tabItem("contacto", # En la opción de menú "Contacto" aparecerán las siguientes cajas de información:
-              infoBox("Linkedin", "María Vela Felardo",            # Caja de Linkedin
-                      icon = icon("linkedin", lib = "font-awesome"), 
-                      fill = TRUE),
-              infoBox("Gmail", "dc1996mariavelafelardo@gmail.com", # Caja de Gmail
-                      icon = icon("google", lib = "font-awesome"), 
-                      fill = TRUE, color = "red"),
-              infoBox("E-mail UEMC", "mvela23668@alumnos.uemc.es", # Caja de email UEMC
-                      icon = icon("envelope", lib = "font-awesome"), 
-                      fill = TRUE, color = "green"),
-              "PROBANDO"
+              div("Mi nombre es María Vela Felardo y soy de Sevilla.",
+                  br(),
+                  "Soy graduada en matemáticas por la universidad de esta preciosa ciudad.",
+                  p(),
+                  "Aunque estudié para dedicarme a la docencia, la vida me llevó por otro camino,",
+                  br(),
+                  "y ahora trabajo en el desarrollo y el mantenimiento",
+                  br(),
+                  "del Sistema Integrado de Servicios Sociales de la Junta de Andalucía",
+                  br(),
+                  "(concretamente en la Renta Mínima de Inserción Social de Andalucía)",
+                  br(),
+                  "como analista funcional y programadora.",
+                  p(),
+                  "Actualmente estoy cursando el Máster Universitario en Gestión y Análisis",
+                  br(),
+                  "de Grandes Volúmenes de Datos (Big Data), impartido por la Universidad Europea",
+                  br(),
+                  "Miguel de Cervantes y por la Escuela de Negocios y Dirección.",
+                  p(),
+                  "Elegí realizar mi Trabajo Final de Máster sobre aplicaciones Shiny porque",
+                  br(),
+                  "en mi trabajo actual también realizo informes interactivos, paneles y cuadros de mando,",
+                  br(),
+                  "y me llamaba mucho la atención la idea de realizarlo con esta herramienta",
+                  br(),
+                  "y utilizando lenguaje R.",
+                  p(),
+                  "Os animo a que veáis el",
+                  a("código de mi aplicación en GitHub", href="https://github.com/mavefe/TFM"),
+                  tags$img(src='svg/github.svg', height='20', width='20'),
+                  br(),
+                  "y probéis a modificarla vosotros mismos.",
+                  p(),
+                  "Podéis contactar conmigo por Linkedin o por correo electrónico:",
+                  p(),
+                  style="text-align: center;"), # Texto centrado
+              fluidRow(
+                infoBox("Linkedin", "María Vela Felardo",            # Caja de Linkedin
+                        icon = icon("linkedin", lib = "font-awesome"), 
+                        fill = TRUE),
+                infoBox("Gmail", "dc1996mariavelafelardo@gmail.com", # Caja de Gmail
+                        icon = icon("google", lib = "font-awesome"), 
+                        fill = TRUE, color = "red"),
+                infoBox("E-mail UEMC", "mvela23668@alumnos.uemc.es", # Caja de email UEMC
+                        icon = icon("envelope", lib = "font-awesome"), 
+                        fill = TRUE, color = "green")
+              )
       ),
       tabItem("fuentes"), # En la opción de menú "Fuentes" y
       tabItem("graficos") # "Gráficos" de momento no debe aparecer nada
