@@ -33,7 +33,7 @@ ui <- dashboardPage(
                         href = "custom.css") # Tahoma
               ),
     tabItems(
-      tabItem("contacto", # En la opción de menú "Contacto" aparecerán las siguientes cajas de información:
+      tabItem("contacto", # En la opción de menú "Contacto" aparecerán el siguiente texto y las siguientes cajas de información:
               div("Mi nombre es María Vela Felardo y soy de Sevilla.",
                   br(),
                   "Soy graduada en matemáticas por la universidad de esta preciosa ciudad.",
@@ -68,11 +68,11 @@ ui <- dashboardPage(
                   br(),
                   "y probéis a modificarla vosotros mismos.",
                   p(),
-                  "Podéis contactar conmigo por Linkedin o por correo electrónico:",
+                  "Podéis contactar conmigo por LinkedIn o por correo electrónico:",
                   p(),
-                  style="text-align: center;"), # Texto centrado
+                  style="text-align: center; font-size: 16px;"), # Texto centrado y con tamaño 16
               fluidRow(
-                infoBox("Linkedin", "María Vela Felardo",            # Caja de Linkedin
+                infoBox("LinkedIn", "María Vela Felardo",            # Caja de Linkedin
                         icon = icon("linkedin", lib = "font-awesome"), 
                         fill = TRUE),
                 infoBox("Gmail", "dc1996mariavelafelardo@gmail.com", # Caja de Gmail
