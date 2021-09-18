@@ -28,9 +28,9 @@ ui <- dashboardPage(
                    ),
   dashboardBody(
     tags$head(tags$style(HTML(".main-sidebar { font-size: 16px; }")), # Tamaño de la fuente del sidebar
-              tags$link(rel = "stylesheet",  # Usa el archivo custom.css,
-                        type = "text/css",   # donde se define el tipo de fuente
-                        href = "custom.css") # Tahoma
+              tags$link(rel = "stylesheet",         # Usa el archivo centurygothic.css,
+                        type = "text/css",          # donde se define el tipo de fuente
+                        href = "centurygothic.css") # Century Gothic
               ),
     tabItems(
       tabItem("contacto", # En la opción de menú "Contacto" aparecerán el siguiente texto y las siguientes cajas de información:
