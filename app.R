@@ -23,11 +23,31 @@ ui <- dashboardPage(
                      menuItem("Contacto",
                               tabName = "contacto",
                               icon = icon("address-card", lib = "font-awesome")
-                     )
+                              )
                      )
                    ),
   dashboardBody(
-    tags$head(tags$style(HTML(".main-sidebar { font-size: 16px; }"))) # Tamaño de la fuente del sidebar
+    tags$head(tags$style(HTML(".main-sidebar { font-size: 16px; }")), # Tamaño de la fuente del sidebar
+              tags$link(rel = "stylesheet",  # Usa el archivo custom.css,
+                        type = "text/css",   # donde se define el tipo de fuente
+                        href = "custom.css") # Tahoma
+              ),
+    tabItems(
+      tabItem("contacto", # En la opción de menú "Contacto" aparecerán las siguientes cajas de información:
+              infoBox("Linkedin", "María Vela Felardo",            # Caja de Linkedin
+                      icon = icon("linkedin", lib = "font-awesome"), 
+                      fill = TRUE),
+              infoBox("Gmail", "dc1996mariavelafelardo@gmail.com", # Caja de Gmail
+                      icon = icon("google", lib = "font-awesome"), 
+                      fill = TRUE, color = "red"),
+              infoBox("E-mail UEMC", "mvela23668@alumnos.uemc.es", # Caja de email UEMC
+                      icon = icon("envelope", lib = "font-awesome"), 
+                      fill = TRUE, color = "green"),
+              "PROBANDO"
+      ),
+      tabItem("fuentes"), # En la opción de menú "Fuentes" y
+      tabItem("graficos") # "Gráficos" de momento no debe aparecer nada
+      )
     )
 )
 
