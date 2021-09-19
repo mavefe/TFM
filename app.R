@@ -81,15 +81,26 @@ ui <- dashboardPage(
               div(
                   p(),
                   "Os animo a que veáis el",
-                  a("código de mi aplicación en GitHub", href="https://github.com/mavefe/TFM"),
-                  tags$img(src='svg/github.svg', height='20', width='20'),
+                  a("código de mi aplicación en GitHub", href="https://github.com/mavefe/TFM"), # Enlace a mi GitHub
+                  tags$img(src='svg/github.svg', height='20', width='20'), # Icono de GitHub
                   br(),
                   "y probéis a modificarla vosotros mismos.",
                   style="text-align: center; font-size: 16px;"
                   )
       ),
-      tabItem("fuentes"), # En la opción de menú "Fuentes" y
-      tabItem("graficos") # "Gráficos" de momento no debe aparecer nada
+      tabItem("fuentes",
+              div("Los datos utilizados en esta aplicación",
+                  br(),
+                  "pertenecen al dataset",
+                  a("COVID-19 World Vaccination Progress", href="https://www.kaggle.com/gpreda/covid-world-vaccination-progress"),
+                  br(),
+                  "realizado por Gabriel Preda y actualizado diariamente en Kaggle.",
+                  style="text-align: center; font-size: 16px;",
+                  p(),
+                  tags$img(src='svg/kaggle.svg', height='200', width='200')
+                  )
+      ),
+      tabItem("graficos") # En la opción de menú "Gráficos" de momento no debe aparecer nada
       )
     )
 )
