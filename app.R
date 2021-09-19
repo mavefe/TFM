@@ -20,7 +20,7 @@ ui <- dashboardPage(
                               tabName = "fuentes",
                               icon = icon("book", lib = "font-awesome")
                               ),
-                     menuItem("Contacto",
+                     menuItem("Información y Contacto",
                               tabName = "contacto",
                               icon = icon("address-card", lib = "font-awesome")
                               )
