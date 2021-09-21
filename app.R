@@ -1,20 +1,45 @@
+# Librerías necesarias:
 library(shiny)
 library(shinydashboard)
 
+# Cargamos los dos csv de datos:
+vacunas     <- read.csv("data/country_vaccinations.csv")
+fabricantes <- read.csv("data/country_vaccinations_by_manufacturer.csv")
+
+# Interfaz de usuario:
 ui <- dashboardPage(
-  skin = "black", # Color del tema
+  skin = "black",                                             # Color del tema
   dashboardHeader(
-    title = tags$strong( # Título en negrita
+    title = tags$strong(                                      # Título en negrita
       tags$img(src='svg/virus.svg', height='35', width='35'), # Icono del virus en el encabezado
-      "Vacunación COVID-19" # Título
+      "Vacunación COVID-19"                                   # Título
       ),
-    titleWidth = 300 # Ancho del encabezado
+    titleWidth = 300                                          # Ancho del encabezado
     ),
   dashboardSidebar(width = 300, # Ancho del sidebar
                    sidebarMenu(
-                     menuItem("Gráficos de la evolución", # Nombre que aparece en la opción de menú
-                              tabName = "graficos", # Nombre interno de la opción de menú
-                              icon = icon("chart-line", lib = "font-awesome") # Icono de la opción de menú
+                     menuItem("Gráficos de la evolución",                      # Nombre que aparece en la opción de menú
+                              tabName = "graficos",                            # Nombre interno de la opción de menú
+                              icon = icon("chart-line", lib = "font-awesome"), # Icono de la opción de menú
+                              selectInput(               # Selección del país para la gráfica
+                                "pais",
+                                "País",
+                                unique(vacunas$country), # Toma los valores distintos de la columna "country"
+                                selected = "Spain"       # Valor inicial
+                                ),
+                              dateRangeInput(         # Rango de fechas para hacer la gráfica
+                                "fechas",
+                                "Fechas",
+                                start = "2021-01-01", # Fecha desde por defecto
+                                end = Sys.Date(),     # Fecha hasta por defecto (día actual)
+                                min = "2020-12-02",   # Mínima fecha que se puede elegir
+                                max = Sys.Date()),     # Máxima fecha que se puede elegir (día actual)
+                                selectInput("variable", "Variable",
+                                            c("Total de vacunas realizadas" = "tot_vac",
+                                              "Personas con al menos una dosis" = "pers_vac",
+                                              "Personas con la pauta completa" = "pauta",
+                                              "Número de vacunas diarias" = "vac_dia")
+                                )
                               ),
                      menuItem("Fuentes",
                               tabName = "fuentes",
@@ -28,7 +53,7 @@ ui <- dashboardPage(
                    ),
   dashboardBody(
     tags$head(tags$style(HTML(".main-sidebar { font-size: 16px; }")), # Tamaño de la fuente del sidebar
-              tags$link(rel = "stylesheet",         # Usa el archivo centurygothic.css,
+              tags$link(rel = "stylesheet",         # Usa el archivo centurygothic.css para el encabezado,
                         type = "text/css",          # donde se define el tipo de fuente
                         href = "centurygothic.css") # Century Gothic
               ),
@@ -82,7 +107,7 @@ ui <- dashboardPage(
                   p(),
                   "Os animo a que veáis el",
                   a("código de mi aplicación en GitHub", href="https://github.com/mavefe/TFM"), # Enlace a mi GitHub
-                  tags$img(src='svg/github.svg', height='20', width='20'), # Icono de GitHub
+                  tags$img(src='svg/github.svg', height='20', width='20'),                      # Icono de GitHub
                   br(),
                   "y probéis a modificarla vosotros mismos.",
                   style="text-align: center; font-size: 16px;"
@@ -105,6 +130,7 @@ ui <- dashboardPage(
     )
 )
 
+# Servidor:
 server <- function(input, output) {}
 
 shinyApp(server = server, ui = ui)
