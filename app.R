@@ -27,20 +27,20 @@ ui <- dashboardPage(
                                 unique(vacunas$country), # Toma los valores distintos de la columna "country"
                                 selected = "Spain"       # Valor inicial
                                 ),
+                              selectInput("variable", "Variable",
+                                          c("Total de vacunas realizadas" = "tot_vac",
+                                            "Personas con al menos una dosis" = "pers_vac",
+                                            "Personas con la pauta completa" = "pauta",
+                                            "Número de vacunas diarias" = "vac_dia")
+                              ),
                               dateRangeInput(         # Rango de fechas para hacer la gráfica
                                 "fechas",
                                 "Fechas",
                                 start = "2021-01-01", # Fecha desde por defecto
                                 end = Sys.Date(),     # Fecha hasta por defecto (día actual)
                                 min = "2020-12-02",   # Mínima fecha que se puede elegir
-                                max = Sys.Date()),     # Máxima fecha que se puede elegir (día actual)
-                                selectInput("variable", "Variable",
-                                            c("Total de vacunas realizadas" = "tot_vac",
-                                              "Personas con al menos una dosis" = "pers_vac",
-                                              "Personas con la pauta completa" = "pauta",
-                                              "Número de vacunas diarias" = "vac_dia")
-                                )
-                              ),
+                                max = Sys.Date())     # Máxima fecha que se puede elegir (día actual)
+                             ),
                      menuItem("Fuentes",
                               tabName = "fuentes",
                               icon = icon("book", lib = "font-awesome")
@@ -125,12 +125,25 @@ ui <- dashboardPage(
                   tags$img(src='svg/kaggle.svg', height='200', width='200')
                   )
       ),
-      tabItem("graficos") # En la opción de menú "Gráficos" de momento no debe aparecer nada
+      tabItem("graficos",
+              plotOutput("grafica"))
       )
     )
 )
 
 # Servidor:
-server <- function(input, output) {}
+server <- function(input, output) {
+  
+#  rv <- reactiveValues(data = vacunas$total_vaccinations)
+  
+#  observeEvent(input$tot_vac,  {rv$data <- vacunas$total_vaccinations})
+#  observeEvent(input$pers_vac, {rv$data <- vacunas$people_vaccinated})
+#  observeEvent(input$pauta,    {rv$data <- vacunas$people_fully_vaccinated})
+#  observeEvent(input$vac_dia,  {rv$data <- vacunas$daily_vaccinations})
+  
+#  output$grafica <- renderPlot({
+#    plot(input$fechas, rv$data, type = "l")
+#  })
+}
 
 shinyApp(server = server, ui = ui)
