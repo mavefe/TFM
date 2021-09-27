@@ -1,12 +1,16 @@
-# Librerías necesarias:
+#---- 1. LIBRERIAS ----
+
 library(shiny)
 library(shinydashboard)
 
-# Cargamos los dos csv de datos:
+
+#---- 2. CSV DE DATOS ----
+
 vacunas     <- read.csv("data/country_vaccinations.csv")
 fabricantes <- read.csv("data/country_vaccinations_by_manufacturer.csv")
 
-# Interfaz de usuario:
+
+#---- 3. INTERFAZ DE USUARIO ----
 ui <- dashboardPage(
   skin = "black",                                             # Color del tema
   dashboardHeader(
@@ -131,7 +135,9 @@ ui <- dashboardPage(
     )
 )
 
-# Servidor:
+
+#---- 4. SERVIDOR ----
+
 server <- function(input, output) {
   
 #  rv <- reactiveValues(data = vacunas$total_vaccinations)
@@ -145,5 +151,8 @@ server <- function(input, output) {
 #    plot(input$fechas, rv$data, type = "l")
 #  })
 }
+
+
+#---- 5. LLAMADA AL SERVIDOR Y A LA INTERFAZ DE USUARIO ----
 
 shinyApp(server = server, ui = ui)
