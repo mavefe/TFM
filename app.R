@@ -62,7 +62,7 @@ ui <- dashboardPage(
                         href = "centurygothic.css") # Century Gothic
               ),
     tabItems(
-      tabItem("contacto", # En la opción de menú "Contacto" aparecerán el siguiente texto y las siguientes cajas de información:
+      tabItem("contacto", # En la opción de menú "Información y Contacto" aparecerán el siguiente texto y las siguientes cajas de información:
               div("Mi nombre es María Vela Felardo y soy de Sevilla.",
                   br(),
                   "Soy graduada en matemáticas por la universidad de esta preciosa ciudad.",
@@ -110,27 +110,34 @@ ui <- dashboardPage(
               div(
                   p(),
                   "Os animo a que veáis el",
-                  a("código de mi aplicación en GitHub", href="https://github.com/mavefe/TFM"), # Enlace a mi GitHub
-                  tags$img(src='svg/github.svg', height='20', width='20'),                      # Icono de GitHub
+                  a("código de mi aplicación en GitHub", 
+                    href="https://github.com/mavefe/TFM"),                 # Enlace a mi GitHub
+                  tags$img(src='svg/github.svg', height='20', width='20'), # Icono de GitHub
                   br(),
                   "y probéis a modificarla vosotros mismos.",
                   style="text-align: center; font-size: 16px;"
                   )
       ),
-      tabItem("fuentes",
-              div("Los datos utilizados en esta aplicación",
-                  br(),
-                  "pertenecen al dataset",
-                  a("COVID-19 World Vaccination Progress", href="https://www.kaggle.com/gpreda/covid-world-vaccination-progress"),
-                  br(),
-                  "realizado por Gabriel Preda y actualizado diariamente en Kaggle.",
-                  style="text-align: center; font-size: 16px;",
-                  p(),
-                  tags$img(src='svg/kaggle.svg', height='200', width='200')
-                  )
+      tabItem("fuentes", # Opción de menú "Fuentes"
+              fluidRow(
+                column(12,style='height:250px'),
+                column(12,
+                       div("Los datos utilizados en esta aplicación",
+                           br(),
+                           "pertenecen al dataset",
+                           a("COVID-19 World Vaccination Progress", 
+                             href="https://www.kaggle.com/gpreda/covid-world-vaccination-progress"),
+                           br(),
+                           "realizado por Gabriel Preda y actualizado diariamente en Kaggle.",
+                           style="text-align: center; font-size: 16px;",
+                           p(),
+                           tags$img(src='svg/kaggle.svg', height='200', width='200'),
+                       )
+                )
+              )
+              
       ),
-      tabItem("graficos",
-              plotOutput("grafica"))
+      tabItem("graficos") # Opción de menú "Gráficos de la evolución"
       )
     )
 )
@@ -138,19 +145,7 @@ ui <- dashboardPage(
 
 #---- 4. SERVIDOR ----
 
-server <- function(input, output) {
-  
-#  rv <- reactiveValues(data = vacunas$total_vaccinations)
-  
-#  observeEvent(input$tot_vac,  {rv$data <- vacunas$total_vaccinations})
-#  observeEvent(input$pers_vac, {rv$data <- vacunas$people_vaccinated})
-#  observeEvent(input$pauta,    {rv$data <- vacunas$people_fully_vaccinated})
-#  observeEvent(input$vac_dia,  {rv$data <- vacunas$daily_vaccinations})
-  
-#  output$grafica <- renderPlot({
-#    plot(input$fechas, rv$data, type = "l")
-#  })
-}
+server <- function(input, output) {}
 
 
 #---- 5. LLAMADA AL SERVIDOR Y A LA INTERFAZ DE USUARIO ----
