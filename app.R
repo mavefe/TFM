@@ -188,7 +188,7 @@ server = function(input, output) {
   })
   
   output$hc1 <- renderHighchart({
-    highchart() %>% #añadir type = stock
+    highchart()
       hc_xAxis(categories = vacunas_pais()$date, # El eje X debe ser la columna de fechas
                visible = FALSE) %>%              # pero lo ponemos oculto para que quede más estético
       
@@ -199,7 +199,7 @@ server = function(input, output) {
       hc_add_series(data = vacunas_pais()$"Personas con la pauta completa", 
                     name = "Personas con la pauta completa") %>%
       
-      hc_colors(c("orange", "lightgreen", "blue"))# Colores de las gráficas
+      hc_colors(c("orange", "lightgreen", "blue")) # Colores de las gráficas
   })
   
   output$hc2 <- renderHighchart({
