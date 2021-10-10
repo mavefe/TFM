@@ -127,7 +127,9 @@ ui <- dashboardPage(
               fluidRow(
                 column(12,style='height:250px'),
                 column(12,
-                       div("Los datos utilizados en esta aplicación",
+                       div(tags$img(src='svg/kaggle.svg', height='200', width='200'),
+                           p(),
+                           "Los datos utilizados en esta aplicación",
                            br(),
                            "pertenecen al dataset",
                            a("COVID-19 World Vaccination Progress", 
@@ -135,8 +137,7 @@ ui <- dashboardPage(
                            br(),
                            "realizado por Gabriel Preda y actualizado diariamente en Kaggle.",
                            style="text-align: center; font-size: 16px;",
-                           p(),
-                           tags$img(src='svg/kaggle.svg', height='200', width='200'),
+                           p()
                        )
                 )
               )
