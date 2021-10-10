@@ -12,6 +12,10 @@ library(highcharter)
 vacunas     <- read.csv("data/country_vaccinations.csv")
 fabricantes <- read.csv("data/country_vaccinations_by_manufacturer.csv")
 
+colnames(vacunas)[4] <- "Total de vacunas realizadas"
+colnames(vacunas)[5] <- "Personas con al menos una dosis"
+colnames(vacunas)[6] <- "Personas con la pauta completa"
+colnames(vacunas)[8] <- "Vacunas diarias"
 
 #---- 3. INTERFAZ DE USUARIO ----
 ui <- dashboardPage(
@@ -36,10 +40,10 @@ ui <- dashboardPage(
                        selected = "Spain"       # Valor inicial
                      ),
                      selectInput("variable", "Variable",
-                                 c("Total de vacunas realizadas" = "tot_vac",
-                                   "Personas con al menos una dosis" = "pers_vac",
-                                   "Personas con la pauta completa" = "pauta",
-                                   "Número de vacunas diarias" = "vac_dia")
+                                c("Total de vacunas realizadas",
+                                  "Personas con al menos una dosis",
+                                  "Personas con la pauta completa",
+                                  "Vacunas diarias")
                      ),
                      #dateRangeInput(         # Rango de fechas para hacer la gráfica
                      #  "fechas",
@@ -72,7 +76,7 @@ ui <- dashboardPage(
     tabItems(
       tabItem(
         tabName = "graficos",
-        fluidRow(highchartOutput("data"))
+        fluidRow(highchartOutput("hc"))
         
         
       ),
@@ -153,7 +157,7 @@ ui <- dashboardPage(
               )
               
       )
-    ) 
+    )
   )
 )
 
@@ -162,22 +166,21 @@ ui <- dashboardPage(
 
 server = function(input, output) {
   
-  vacunas_pais <- reactive({               # Filtro el dataset
-    filter(vacunas, country == input$pais) # por el país
-  })                                       # introducido
+  vacunas_pais <- reactive({
+    filter(vacunas, country == input$pais,                                                      # Filtramos por el país elegido,
+           (is.na(vacunas[4]) == FALSE & input$variable == "Total de vacunas realizadas") |     # y en función de la variable elegida,
+           (is.na(vacunas[5]) == FALSE & input$variable == "Personas con al menos una dosis") | # indicamos que los registros
+           (is.na(vacunas[6]) == FALSE & input$variable == "Personas con la pauta completa") |  # mostrados de esa variable
+           (is.na(vacunas[8]) == FALSE & input$variable == "Vacunas diarias"))                  # no sean nulos
+  })
   
-  variable <- reactiveValues(data = "total_vaccinations") # Como el valor inicial es "Total de vacunas realizadas",
-                                                          # pongo por defecto la columna correspondiente
   
-  observeEvent(input$pers_vac, {variable$data <- "people_vaccinated"})       # Si se elige otra opción,
-  observeEvent(input$pauta,    {variable$data <- "people_fully_vaccinated"}) # se pone la columna
-  observeEvent(input$vac_dia,  {variable$data <- "daily_vaccinations"})      # correspondiente
   
-  vacunas_pais_variable_no_vacia <- reactive({          # Filtro el dataset para que elimine
-    filter(vacunas_pais, is.na(variable$data) == FALSE) # los registros cuyo valor
-  })                                                    # en la variable elegida esté vacío
-  
-  #output$data <- renderHighchart({})
+  output$hc <- renderHighchart({
+    highchart() %>%
+      hc_xAxis(categories = vacunas_pais()$date, visible = FALSE) %>%
+      hc_add_series(data = vacunas_pais()$"Total de vacunas realizadas", name = input$variable)
+  })
   
 }
 
