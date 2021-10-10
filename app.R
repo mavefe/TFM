@@ -169,9 +169,9 @@ server = function(input, output) {
   variable <- reactiveValues(data = "total_vaccinations") # Como el valor inicial es "Total de vacunas realizadas",
                                                           # pongo por defecto la columna correspondiente
   
-  observeEvent(input$pers_vac, {variable$data <- vacunas_pais$people_vaccinated})       # Si se elige otra opción,
-  observeEvent(input$pauta,    {variable$data <- vacunas_pais$people_fully_vaccinated}) # se pone la columna
-  observeEvent(input$vac_dia,  {variable$data <- vacunas_pais$daily_vaccinations})      # correspondiente
+  observeEvent(input$pers_vac, {variable$data <- "people_vaccinated"})       # Si se elige otra opción,
+  observeEvent(input$pauta,    {variable$data <- "people_fully_vaccinated"}) # se pone la columna
+  observeEvent(input$vac_dia,  {variable$data <- "daily_vaccinations"})      # correspondiente
   
   vacunas_pais_variable_no_vacía <- reactive({          # Filtro el dataset para que elimine
     filter(vacunas_pais, is.na(variable$data) == FALSE) # los registros cuyo valor
