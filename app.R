@@ -12,6 +12,7 @@ library(highcharter)
 vacunas     <- read.csv("data/country_vaccinations.csv")
 fabricantes <- read.csv("data/country_vaccinations_by_manufacturer.csv")
 
+# Renombramos las columnas que nos interesan:
 colnames(vacunas)[4] <- "Total de vacunas realizadas"
 colnames(vacunas)[5] <- "Personas con al menos una dosis"
 colnames(vacunas)[6] <- "Personas con la pauta completa"
@@ -39,12 +40,12 @@ ui <- dashboardPage(
                        unique(vacunas$country), # Toma los valores distintos de la columna "country"
                        selected = "Spain"       # Valor inicial
                      ),
-                     selectInput("variable", "Variable",
-                                c("Total de vacunas realizadas",
-                                  "Personas con al menos una dosis",
-                                  "Personas con la pauta completa",
-                                  "Vacunas diarias")
-                     ),
+                     #selectInput("variable", "Variable",
+                     #            c("Total de vacunas realizadas",
+                     #             "Personas con al menos una dosis",
+                     #             "Personas con la pauta completa",
+                     #             "Vacunas diarias")
+                     #),
                      #dateRangeInput(         # Rango de fechas para hacer la gráfica
                      #  "fechas",
                      #  "Fechas",
@@ -76,13 +77,13 @@ ui <- dashboardPage(
     tabItems(
       tabItem(
         tabName = "graficos",
-        fluidRow(highchartOutput("hc"))
+        fluidRow(highchartOutput("hc1"),highchartOutput("hc2"),highchartOutput("hc3"),highchartOutput("hc4"))
         
         
       ),
       
-      tabItem("contacto",
-              fluidRow(textOutput("result"),# En la opción de menú "Información y Contacto" aparecerán el siguiente texto y las siguientes cajas de información:
+      tabItem("contacto",                    # En la opción de menú "Información y Contacto"
+              fluidRow(textOutput("result"), # aparecerán el siguiente texto y las siguientes cajas de información:
                        div("Mi nombre es María Vela Felardo y soy de Sevilla.",
                            br(),
                            "Soy graduada en matemáticas por la universidad de esta preciosa ciudad.",
@@ -166,20 +167,66 @@ ui <- dashboardPage(
 
 server = function(input, output) {
   
-  vacunas_pais <- reactive({
-    filter(vacunas, country == input$pais,                                                      # Filtramos por el país elegido,
-           (is.na(vacunas[4]) == FALSE & input$variable == "Total de vacunas realizadas") |     # y en función de la variable elegida,
-           (is.na(vacunas[5]) == FALSE & input$variable == "Personas con al menos una dosis") | # indicamos que los registros
-           (is.na(vacunas[6]) == FALSE & input$variable == "Personas con la pauta completa") |  # mostrados de esa variable
-           (is.na(vacunas[8]) == FALSE & input$variable == "Vacunas diarias"))                  # no sean nulos
+  vacunas_pais <- reactive({               # Primero filtramos el dataset
+    filter(vacunas, country == input$pais) # por el país elegido
   })
   
+  vacunas_pais_1 <- reactive({                                # Después filtramos una vez para cada variable,
+    filter(vacunas_pais(), is.na(vacunas_pais()[4]) == FALSE) # de forma que los registros asociados a cada variable no estén vacíos
+  })
   
+  vacunas_pais_2 <- reactive({
+    filter(vacunas_pais(), is.na(vacunas_pais()[5]) == FALSE)
+  })
   
-  output$hc <- renderHighchart({
+  vacunas_pais_3 <- reactive({
+    filter(vacunas_pais(), is.na(vacunas_pais()[6]) == FALSE)
+  })
+  
+  vacunas_pais_4 <- reactive({
+    filter(vacunas_pais(), is.na(vacunas_pais()[8]) == FALSE)
+  })
+  
+  output$hc1 <- renderHighchart({
     highchart() %>%
-      hc_xAxis(categories = vacunas_pais()$date, visible = FALSE) %>%
-      hc_add_series(data = vacunas_pais()$"Total de vacunas realizadas", name = input$variable)
+      hc_xAxis(categories = vacunas_pais_1()$date, # El eje X debe ser la columna de fechas
+               visible = FALSE) %>%                # pero lo ponemos oculto para que quede más estético
+      
+      hc_add_series(data = vacunas_pais_1()$"Total de vacunas realizadas",  # Variable que se muestra en la gráfica
+                    name = "Total de vacunas realizadas") %>%
+      
+      hc_colors("orange") # Color de la gráfica
+  })
+  
+  output$hc2 <- renderHighchart({
+    highchart() %>%
+      hc_xAxis(categories = vacunas_pais_2()$date,
+               visible = FALSE) %>%
+      
+      hc_add_series(data = vacunas_pais_2()$"Personas con al menos una dosis", 
+                    name = "Personas con al menos una dosis") %>%
+      
+      hc_colors("lightgreen")
+  })
+  
+  output$hc3 <- renderHighchart({
+    highchart() %>%
+      hc_xAxis(categories = vacunas_pais_3()$date,
+               visible = FALSE) %>%
+      
+      hc_add_series(data = vacunas_pais_3()$"Personas con la pauta completa", 
+                    name = "Personas con la pauta completa")
+  })
+  
+  output$hc4 <- renderHighchart({
+    highchart() %>%
+      hc_xAxis(categories = vacunas_pais_4()$date,
+               visible = FALSE) %>%
+      
+      hc_add_series(data = vacunas_pais_4()$"Vacunas diarias", 
+                    name = "Vacunas diarias") %>%
+      
+      hc_colors("violet")
   })
   
 }
