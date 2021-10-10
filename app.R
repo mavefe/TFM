@@ -175,7 +175,7 @@ server = function(input, output) {
   
   vacunas_pais_variable_no_vacia <- reactive({          # Filtro el dataset para que elimine
     filter(vacunas_pais, is.na(variable$data) == FALSE) # los registros cuyo valor
-  })                                                    # en la variable elegida no esté vacío
+  })                                                    # en la variable elegida esté vacío
   
   #output$data <- renderHighchart({})
   
