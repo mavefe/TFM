@@ -173,6 +173,10 @@ server = function(input, output) {
   observeEvent(input$pauta,    {variable$data <- vacunas_pais$people_fully_vaccinated}) # se pone la columna
   observeEvent(input$vac_dia,  {variable$data <- vacunas_pais$daily_vaccinations})      # correspondiente
   
+  vacunas_pais_variable_no_vacía <- reactive({          # Filtro el dataset para que elimine
+    filter(vacunas_pais, is.na(variable$data) == FALSE) # los registros cuyo valor
+  })                                                    # en la variable elegida no esté vacío
+  
   #output$data <- renderHighchart({})
   
 }
