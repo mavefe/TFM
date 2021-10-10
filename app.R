@@ -40,22 +40,6 @@ ui <- dashboardPage(
                        unique(vacunas$country), # Toma los valores distintos de la columna "country"
                        selected = "Spain"       # Valor inicial
                      ),
-                     #selectInput("variable", "Variable",
-                     #            c("Total de vacunas realizadas",
-                     #             "Personas con al menos una dosis",
-                     #             "Personas con la pauta completa",
-                     #             "Vacunas diarias")
-                     #),
-                     #dateRangeInput(         # Rango de fechas para hacer la gráfica
-                     #  "fechas",
-                     #  "Fechas",
-                     #  start = "2021-01-01", # Fecha desde por defecto
-                     #  end = Sys.Date(),     # Fecha hasta por defecto (día actual)
-                     #  min = "2020-12-02",   # Mínima fecha que se puede elegir
-                     #  max = Sys.Date()      # Máxima fecha que se puede elegir (día actual)
-                     #),
-                     
-                     
                      menuItem("Fuentes",
                               tabName = "fuentes",
                               icon = icon("book", lib = "font-awesome")
