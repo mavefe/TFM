@@ -172,7 +172,7 @@ server = function(input, output) {
   })
   
   output$hc1 <- renderHighchart({
-    highchart()
+    highchart() %>%
       hc_xAxis(categories = vacunas_pais()$date, # El eje X debe ser la columna de fechas
                visible = FALSE) %>%              # pero lo ponemos oculto para que quede más estético
       
