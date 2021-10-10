@@ -77,7 +77,7 @@ ui <- dashboardPage(
     tabItems(
       tabItem(
         tabName = "graficos",
-        fluidRow(highchartOutput("hc1"),highchartOutput("hc2"),highchartOutput("hc3"),highchartOutput("hc4"))
+        fluidRow(highchartOutput("hc1"), highchartOutput("hc2"))
         
         
       ),
@@ -189,46 +189,29 @@ server = function(input, output) {
   
   output$hc1 <- renderHighchart({
     highchart() %>%
-      hc_xAxis(categories = vacunas_pais_1()$date, # El eje X debe ser la columna de fechas
-               visible = FALSE) %>%                # pero lo ponemos oculto para que quede más estético
+      hc_xAxis(categories = vacunas_pais()$date, # El eje X debe ser la columna de fechas
+               visible = FALSE) %>%              # pero lo ponemos oculto para que quede más estético
       
-      hc_add_series(data = vacunas_pais_1()$"Total de vacunas realizadas",  # Variable que se muestra en la gráfica
+      hc_add_series(data = vacunas_pais()$"Total de vacunas realizadas",  # Variable que se muestra en la gráfica
                     name = "Total de vacunas realizadas") %>%
+      hc_add_series(data = vacunas_pais()$"Personas con al menos una dosis", 
+                    name = "Personas con al menos una dosis") %>%
+      hc_add_series(data = vacunas_pais()$"Personas con la pauta completa", 
+                    name = "Personas con la pauta completa") %>%
       
-      hc_colors("orange") # Color de la gráfica
+      hc_colors(c("orange", "lightgreen", "blue")) # Colores de las gráficas
   })
   
   output$hc2 <- renderHighchart({
     highchart() %>%
-      hc_xAxis(categories = vacunas_pais_2()$date,
+      hc_xAxis(categories = vacunas_pais()$date,
                visible = FALSE) %>%
       
-      hc_add_series(data = vacunas_pais_2()$"Personas con al menos una dosis", 
-                    name = "Personas con al menos una dosis") %>%
-      
-      hc_colors("lightgreen")
-  })
-  
-  output$hc3 <- renderHighchart({
-    highchart() %>%
-      hc_xAxis(categories = vacunas_pais_3()$date,
-               visible = FALSE) %>%
-      
-      hc_add_series(data = vacunas_pais_3()$"Personas con la pauta completa", 
-                    name = "Personas con la pauta completa")
-  })
-  
-  output$hc4 <- renderHighchart({
-    highchart() %>%
-      hc_xAxis(categories = vacunas_pais_4()$date,
-               visible = FALSE) %>%
-      
-      hc_add_series(data = vacunas_pais_4()$"Vacunas diarias", 
+      hc_add_series(data = vacunas_pais()$"Vacunas diarias",
                     name = "Vacunas diarias") %>%
       
       hc_colors("violet")
   })
-  
 }
 
 
