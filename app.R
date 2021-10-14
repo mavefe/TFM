@@ -200,8 +200,8 @@ server = function(input, output) {
     highchart() %>%
       hc_chart(type = "pie") %>% # Gráfica de sectores
       hc_add_series(data = fabricantes_pais_fecha()$total_vaccinations,
-                    name = "Dosis") %>%
-      hc_xAxis(categories = fabricantes_pais_fecha()$vaccine)
+                    name = "Dosis") #%>%
+      #hc_xAxis(categories = fabricantes_pais_fecha()$vaccine)
   })
 }
 
