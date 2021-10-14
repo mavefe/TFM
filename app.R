@@ -167,9 +167,9 @@ server = function(input, output) {
            date <= input$fecha)
   })                            
   
-  fabricantes_pais_fecha <- reactive({            # Además, en el segundo dataset, solo nos interesan
-    filter(fabricantes_pais(), date == max(date, 0)) # los registros asociados a la fecha máxima
-  })                                              # de todas las fechas anteriores
+  fabricantes_pais_fecha <- reactive({               # Además, en el segundo dataset, solo nos interesan los registros
+    filter(fabricantes_pais(), date == max(date, 0)) # asociados a la fecha máxima de todas las fechas anteriores
+  })                                                 # (añado 0 al max para que no salga el warning)
   
   output$hc1 <- renderHighchart({
     highchart() %>%
