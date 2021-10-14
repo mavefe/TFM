@@ -3,7 +3,6 @@
 library(shiny)
 library(shinydashboard)
 library(dplyr)
-library(quantmod)
 library(highcharter)
 
 
