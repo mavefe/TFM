@@ -67,8 +67,8 @@ ui <- dashboardPage(
     tabItems(
       tabItem(
         tabName = "graficos",
-        fluidRow(box(highchartOutput("hc1")), box(highchartOutput("hc2"))),
-        fluidRow(box(highchartOutput("hc3")))
+        fluidRow(box(highchartOutput("hc1")), box(highchartOutput("hc2"))),                     # En la primera fila, dos gráficas en cajas
+        fluidRow(box(highchartOutput("hc3")), box(htmlOutput("txt", style="font-size: 16px;"))) # En la segunda fila, una gráfica y texto en cajas
       ),
       
       tabItem("contacto",                    # En la opción de menú "Información y Contacto"
@@ -158,15 +158,16 @@ ui <- dashboardPage(
 server = function(input, output) {
   
   vacunas_pais <- reactive({               # Primero filtramos el dataset
-    filter(vacunas, country == input$pais) # por el país elegido
+    filter(vacunas, country == input$pais, # por el país elegido
+           date <= input$fecha)            # y cuya fecha sea menor o igual a la introducida
   })
   
   fabricantes_pais <- reactive({
-    filter(fabricantes, location == input$pais, # En el segundo dataset, además de por el país,
-           date <= input$fecha)                 # indicamos que la fecha sea menor o igual a la seleccionada
+    filter(fabricantes, location == input$pais,
+           date <= input$fecha)
   })                            
   
-  fabricantes_pais_fecha <- reactive({            # Además solo nos interesan
+  fabricantes_pais_fecha <- reactive({            # Además, en el segundo dataset, solo nos interesan
     filter(fabricantes_pais(), date == max(date)) # los registros asociados a la fecha máxima
   })                                              # de todas las fechas anteriores
   
@@ -200,8 +201,18 @@ server = function(input, output) {
     highchart() %>%
       hc_chart(type = "pie") %>% # Gráfica de sectores
       hc_add_series(data = fabricantes_pais_fecha()$total_vaccinations,
-                    name = "Dosis") #%>%
+                    name = "Dosis") %>%
+      hc_title(text = "Fabricantes")
       #hc_xAxis(categories = fabricantes_pais_fecha()$vaccine)
+  })
+  
+  output$txt <- renderUI({
+    str1 <- paste("<p>", "A fecha de ", input$fecha, 
+                  ", los últimos datos obtenidos son los siguientes:", "</p>")
+    str2 <- paste("<li>", "El total de vacunas realizadas es de ", "</li>")
+    str3 <- paste("<li>", "El número de personas con al menos una dosis es de ", "</li>")
+    str4 <- paste("<li>", "El número de personas con la pauta completa es de ", "</li>")
+    HTML(paste(str1, str2, str3, str4))
   })
 }
 
