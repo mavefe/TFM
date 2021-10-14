@@ -40,6 +40,12 @@ ui <- dashboardPage(
                        unique(vacunas$country), # Toma los valores distintos de la columna "country"
                        selected = "Spain"       # Valor inicial
                      ),
+                     dateInput(
+                       "fecha",
+                       "Fecha",
+                       format = "dd/mm/yyyy",
+                       value = Sys.Date()
+                     ),
                      menuItem("Fuentes",
                               tabName = "fuentes",
                               icon = icon("book", lib = "font-awesome")
@@ -61,9 +67,8 @@ ui <- dashboardPage(
     tabItems(
       tabItem(
         tabName = "graficos",
-        fluidRow(box(highchartOutput("hc1")), box(highchartOutput("hc2")))
-        
-        
+        fluidRow(box(highchartOutput("hc1")), box(highchartOutput("hc2"))),
+        fluidRow(box(highchartOutput("hc3")))
       ),
       
       tabItem("contacto",                    # En la opción de menú "Información y Contacto"
@@ -125,7 +130,7 @@ ui <- dashboardPage(
       ),
       tabItem("fuentes", # Opción de menú "Fuentes"
               fluidRow(
-                column(12,style='height:250px'),
+                column(12,style='height:200px'),
                 column(12,
                        div(tags$img(src='svg/kaggle.svg', height='200', width='200'),
                            p(),
@@ -156,21 +161,14 @@ server = function(input, output) {
     filter(vacunas, country == input$pais) # por el país elegido
   })
   
-  vacunas_pais_1 <- reactive({                                # Después filtramos una vez para cada variable,
-    filter(vacunas_pais(), is.na(vacunas_pais()[4]) == FALSE) # de forma que los registros asociados a cada variable no estén vacíos
-  })
+  fabricantes_pais <- reactive({
+    filter(fabricantes, location == input$pais, # En el segundo dataset, además de por el país,
+           date <= input$fecha)                 # indicamos que la fecha sea menor o igual a la seleccionada
+  })                            
   
-  vacunas_pais_2 <- reactive({
-    filter(vacunas_pais(), is.na(vacunas_pais()[5]) == FALSE)
-  })
-  
-  vacunas_pais_3 <- reactive({
-    filter(vacunas_pais(), is.na(vacunas_pais()[6]) == FALSE)
-  })
-  
-  vacunas_pais_4 <- reactive({
-    filter(vacunas_pais(), is.na(vacunas_pais()[8]) == FALSE)
-  })
+  fabricantes_pais_fecha <- reactive({            # Además solo nos interesan
+    filter(fabricantes_pais(), date == max(date)) # los registros asociados a la fecha máxima
+  })                                              # de todas las fechas anteriores
   
   output$hc1 <- renderHighchart({
     highchart() %>%
@@ -196,6 +194,14 @@ server = function(input, output) {
                     name = "Vacunas diarias") %>%
       
       hc_colors("violet")
+  })
+  
+  output$hc3 <- renderHighchart({
+    highchart() %>%
+      hc_chart(type = "pie") %>% # Gráfica de sectores
+      hc_add_series(data = fabricantes_pais_fecha()$total_vaccinations,
+                    name = "Dosis") %>%
+      hc_xAxis(categories = fabricantes_pais_fecha()$vaccine)
   })
 }
 
