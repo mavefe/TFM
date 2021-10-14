@@ -206,12 +206,27 @@ server = function(input, output) {
       #hc_xAxis(categories = fabricantes_pais_fecha()$vaccine)
   })
   
+  vacunas_pais_notnull_1 <- reactive({ # Filtramos el primer dataset para que la columna elegida no tenga valores nulos
+    filter(vacunas_pais(), is.na(vacunas_pais()$"Total de vacunas realizadas") == FALSE)
+  })
+  
+  vacunas_pais_notnull_2 <- reactive({
+    filter(vacunas_pais(), is.na(vacunas_pais()$"Personas con al menos una dosis") == FALSE)
+  })
+  
+  vacunas_pais_notnull_3 <- reactive({
+    filter(vacunas_pais(), is.na(vacunas_pais()$"Personas con la pauta completa") == FALSE)
+  })
+  
   output$txt <- renderUI({
     str1 <- paste("<p>", "A fecha de ", input$fecha, 
                   ", los últimos datos obtenidos son los siguientes:", "</p>")
-    str2 <- paste("<li>", "El total de vacunas realizadas es de ", "</li>")
-    str3 <- paste("<li>", "El número de personas con al menos una dosis es de ", "</li>")
-    str4 <- paste("<li>", "El número de personas con la pauta completa es de ", "</li>")
+    str2 <- paste("<li>", "El total de vacunas realizadas es de ", 
+                  max(vacunas_pais_notnull_1()$"Total de vacunas realizadas"), ".", "</li>")
+    str3 <- paste("<li>", "El número de personas con al menos una dosis es de ", 
+                  max(vacunas_pais_notnull_2()$"Personas con al menos una dosis"), ".", "</li>")
+    str4 <- paste("<li>", "El número de personas con la pauta completa es de ", 
+                  max(vacunas_pais_notnull_3()$"Personas con la pauta completa"), ".", "</li>")
     HTML(paste(str1, str2, str3, str4))
   })
 }
