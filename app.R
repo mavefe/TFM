@@ -168,7 +168,7 @@ server = function(input, output) {
   })                            
   
   fabricantes_pais_fecha <- reactive({            # Además, en el segundo dataset, solo nos interesan
-    filter(fabricantes_pais(), date == max(date)) # los registros asociados a la fecha máxima
+    filter(fabricantes_pais(), date == max(date, 0)) # los registros asociados a la fecha máxima
   })                                              # de todas las fechas anteriores
   
   output$hc1 <- renderHighchart({
@@ -222,11 +222,11 @@ server = function(input, output) {
     str1 <- paste("<p>", "A fecha de ", input$fecha, 
                   ", los últimos datos obtenidos son los siguientes:", "</p>")
     str2 <- paste("<li>", "El total de vacunas realizadas es de ", 
-                  max(vacunas_pais_notnull_1()$"Total de vacunas realizadas"), ".", "</li>")
+                  max(vacunas_pais_notnull_1()$"Total de vacunas realizadas", 0), ".", "</li>")
     str3 <- paste("<li>", "El número de personas con al menos una dosis es de ", 
-                  max(vacunas_pais_notnull_2()$"Personas con al menos una dosis"), ".", "</li>")
+                  max(vacunas_pais_notnull_2()$"Personas con al menos una dosis", 0), ".", "</li>")
     str4 <- paste("<li>", "El número de personas con la pauta completa es de ", 
-                  max(vacunas_pais_notnull_3()$"Personas con la pauta completa"), ".", "</li>")
+                  max(vacunas_pais_notnull_3()$"Personas con la pauta completa", 0), ".", "</li>")
     HTML(paste(str1, str2, str3, str4))
   })
 }
