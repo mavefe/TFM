@@ -130,7 +130,7 @@ ui <- dashboardPage(
       ),
       tabItem("fuentes", # Opción de menú "Fuentes"
               fluidRow(
-                column(12,style='height:200px'),
+                column(12,style='height:200px'), # Para centrarlo verticalmente
                 column(12,
                        div(tags$img(src='svg/kaggle.svg', height='200', width='200'),
                            p(),
@@ -206,8 +206,8 @@ server = function(input, output) {
       #hc_xAxis(categories = fabricantes_pais_fecha()$vaccine)
   })
   
-  vacunas_pais_notnull_1 <- reactive({ # Filtramos el primer dataset para que la columna elegida no tenga valores nulos
-    filter(vacunas_pais(), is.na(vacunas_pais()$"Total de vacunas realizadas") == FALSE)
+  vacunas_pais_notnull_1 <- reactive({                                                   # Filtramos el primer dataset para que
+    filter(vacunas_pais(), is.na(vacunas_pais()$"Total de vacunas realizadas") == FALSE) # la columna elegida no tenga valores nulos
   })
   
   vacunas_pais_notnull_2 <- reactive({
