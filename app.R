@@ -1,3 +1,4 @@
+
 #---- 1. LIBRERIAS ----
 
 library(shiny)
@@ -12,6 +13,7 @@ vacunas     <- read.csv("data/country_vaccinations.csv")
 fabricantes <- read.csv("data/country_vaccinations_by_manufacturer.csv")
 
 # Renombramos las columnas que nos interesan:
+
 colnames(vacunas)[4] <- "Total de vacunas realizadas"
 colnames(vacunas)[5] <- "Personas con al menos una dosis"
 colnames(vacunas)[6] <- "Personas con la pauta completa"
