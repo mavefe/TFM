@@ -130,15 +130,17 @@ ui <- dashboardPage(
                         icon = icon("envelope", lib = "font-awesome"), 
                         fill = TRUE, color = "green")
               ),
-              div(
-                p(),
-                "Os animo a que veáis el",
-                a("código de mi aplicación en GitHub", 
-                  href="https://github.com/mavefe/TFM"),                 # Enlace a mi GitHub
-                tags$img(src='svg/github.svg', height='20', width='20'), # Icono de GitHub
-                br(),
-                "y probéis a modificarla vosotros mismos.",
-                style="text-align: center; font-size: 16px;"
+              fluidRow(
+                div(
+                  p(),
+                  "Os animo a que veáis el",
+                  a("código de mi aplicación en GitHub", 
+                    href="https://github.com/mavefe/TFM"),                 # Enlace a mi GitHub
+                  tags$img(src='svg/github.svg', height='20', width='20'), # Icono de GitHub
+                  br(),
+                  "y probéis a modificarla vosotros mismos.",
+                  style="text-align: center; font-size: 16px;"
+                )
               )
       ),
       tabItem("fuentes", # Opción de menú "Fuentes"
