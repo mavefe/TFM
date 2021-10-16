@@ -230,11 +230,14 @@ server = function(input, output) {
     str1 <- paste("<p>", "A fecha de ", input$fecha, 
                   ", los últimos datos obtenidos son los siguientes:", "</p>")
     str2 <- paste("<li>", "El total de vacunas realizadas es de ", 
-                  max(vacunas_pais_notnull_1()$"Total de vacunas realizadas", 0), ".", "</li>")
+                  max(vacunas_pais_notnull_1()$"Total de vacunas realizadas", # Ponemos máximo comparando con cero, porque
+                      0), ".", "</li>")                                       # si el máximo de la columna es NA, muestra -inf
     str3 <- paste("<li>", "El número de personas con al menos una dosis es de ", 
-                  max(vacunas_pais_notnull_2()$"Personas con al menos una dosis", 0), ".", "</li>")
+                  max(vacunas_pais_notnull_2()$"Personas con al menos una dosis", 
+                      0), ".", "</li>")
     str4 <- paste("<li>", "El número de personas con la pauta completa es de ", 
-                  max(vacunas_pais_notnull_3()$"Personas con la pauta completa", 0), ".", "</li>")
+                  max(vacunas_pais_notnull_3()$"Personas con la pauta completa", 
+                      0), ".", "</li>")
     HTML(paste(str1, str2, str3, str4))
   })
 }
