@@ -158,14 +158,7 @@ ui <- dashboardPage(
                            "realizado por Gabriel Preda y actualizado diariamente en Kaggle.",
                            style="text-align: center; font-size: 16px;",
                            p()
-                       )
-                )
-              )
-              
-      )
-    )
-  )
-)
+                       )))))))
 
 
 #---- 4. SERVIDOR ----
@@ -230,16 +223,19 @@ server = function(input, output) {
     }
   })
   
-  vacunas_pais_notnull_1 <- reactive({                                                   # Filtramos el primer dataset para que
-    filter(vacunas_pais(), is.na(vacunas_pais()$"Total de vacunas realizadas") == FALSE) # la columna elegida no tenga valores nulos
+  vacunas_pais_notnull_1 <- reactive({                                   # Filtramos el primer dataset para que
+    filter(vacunas_pais(), 
+           is.na(vacunas_pais()$"Total de vacunas realizadas") == FALSE) # la columna elegida no tenga valores nulos
   })
   
   vacunas_pais_notnull_2 <- reactive({
-    filter(vacunas_pais(), is.na(vacunas_pais()$"Personas con al menos una dosis") == FALSE)
+    filter(vacunas_pais(), 
+           is.na(vacunas_pais()$"Personas con al menos una dosis") == FALSE)
   })
   
   vacunas_pais_notnull_3 <- reactive({
-    filter(vacunas_pais(), is.na(vacunas_pais()$"Personas con la pauta completa") == FALSE)
+    filter(vacunas_pais(), 
+           is.na(vacunas_pais()$"Personas con la pauta completa") == FALSE)
   })
   
   output$txt <- renderUI({
