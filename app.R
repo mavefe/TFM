@@ -196,13 +196,22 @@ server = function(input, output) {
       hc_colors("violet")
   })
   
+  nfilas <- reactive({       # Cuento las filas del segundo dataset filtrado por el país,
+    nrow(fabricantes_pais()) # ya que si no encuentra nada, da error
+  })
+  
   output$hc3 <- renderHighchart({
-    highchart() %>%
-      hc_chart(type = "pie") %>% # Gráfica de sectores
-      hc_add_series(data = fabricantes_pais_fecha()$total_vaccinations,
-                    name = "Dosis") %>%
-      hc_title(text = "Fabricantes")
-      #hc_xAxis(categories = fabricantes_pais_fecha()$vaccine)
+    if (nfilas()>0){
+      fabricantes_pais_fecha()  %>%
+        hchart("pie", # Gráfica de sectores
+               hcaes(x = vaccine, y = total_vaccinations),
+               name = "Dosis"
+        ) %>%
+        hc_title(text = "Fabricantes")
+    } else {                                                  # Evitamos el error mencionado, mostrando
+      highchart() %>%                                         # un título informativo en caso
+        hc_title(text = "No hay datos sobre los fabricantes") # de que no haya filas
+    }
   })
   
   vacunas_pais_notnull_1 <- reactive({                                                   # Filtramos el primer dataset para que
