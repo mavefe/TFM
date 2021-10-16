@@ -24,21 +24,28 @@ ui <- dashboardPage(
   skin = "black",                                             # Color del tema
   dashboardHeader(
     title = tags$strong(                                      # Título en negrita
+      
       tags$img(src='svg/virus.svg', height='35', width='35'), # Icono del virus en el encabezado
+      
       "Vacunación COVID-19"                                   # Título
     ),
     titleWidth = 300                                          # Ancho del encabezado
+    
   ),
   dashboardSidebar(width = 300, # Ancho del sidebar
                    sidebarMenu(
                      menuItem("Gráficos de la evolución",                      # Nombre que aparece en la opción de menú
+                              
                               tabName = "graficos",                            # Nombre interno de la opción de menú
+                              
                               icon = icon("chart-line", lib = "font-awesome")  # Icono de la opción de menú
                      ),
+                     
                      selectInput(               # Selección del país para la gráfica
                        "pais",
                        "País",
                        unique(vacunas$country), # Toma los valores distintos de la columna "country"
+                       
                        selected = "Spain"       # Valor inicial
                      ),
                      dateInput(
@@ -59,21 +66,26 @@ ui <- dashboardPage(
   ),
   dashboardBody(
     tags$head(tags$style(HTML(".main-sidebar { font-size: 16px; }")), # Tamaño de la fuente del sidebar
+              
               tags$link(rel = "stylesheet",         # Usa el archivo centurygothic.css para el encabezado,
+                        
                         type = "text/css",          # donde se define el tipo de fuente
+                        
                         href = "centurygothic.css") # Century Gothic
     ),
-    
     
     tabItems(
       tabItem(
         tabName = "graficos",
-        fluidRow(box(highchartOutput("hc1")), box(highchartOutput("hc2"))),                     # En la primera fila, dos gráficas en cajas
-        fluidRow(box(highchartOutput("hc3")), box(htmlOutput("txt", style="font-size: 16px;"))) # En la segunda fila, una gráfica y texto en cajas
+        fluidRow(box(highchartOutput("hc1")), 
+                 box(highchartOutput("hc2"))),                     # En la primera fila, dos gráficas en cajas
+        fluidRow(box(highchartOutput("hc3")), 
+                 box(htmlOutput("txt", style="font-size: 16px;"))) # En la segunda fila, una gráfica y texto en cajas
       ),
-      
       tabItem("contacto",                    # En la opción de menú "Información y Contacto"
-              fluidRow(textOutput("result"), # aparecerán el siguiente texto y las siguientes cajas de información:
+              
+              fluidRow(                      # aparecerán el siguiente texto y las siguientes cajas de información:
+                       
                        div("Mi nombre es María Vela Felardo y soy de Sevilla.",
                            br(),
                            "Soy graduada en matemáticas por la universidad de esta preciosa ciudad.",
